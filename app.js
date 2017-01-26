@@ -8,8 +8,8 @@ var app = {
   /* domain */
   domain: 'loadobfp.ru'.replace('obf','u','scated'),
 
-  /* subdomains from frame3 to frame11 */
-  subdomains: [3,4,5,6,7,8,9,10,11].map(function(x) { return 'frame' + x; }),
+  /* subdomains from frame2 to frame11 */
+  subdomains: [2,3,4,5,6,7,8,9,10,11].map(function(x) { return 'frame' + x; }),
 
   urlTemplate: 'https://${SUBDOMAIN}.${DOMAIN}/${H}/${A}/${SH}.${IMAGE}.3.jpg',
 
