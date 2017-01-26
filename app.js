@@ -88,7 +88,7 @@ var app = {
 
   getNextImageUrl: function() {
     app.currentSubdomain++;
-    if (app.currentSubdomain === app.subdomains.length) {
+    if (app.currentSubdomain >= app.subdomains.length) {
       app.currentSubdomain = 0;
       app.currentImage++;
     }
@@ -105,6 +105,7 @@ var app = {
     $img.onload = function(x) {
       if($img.naturalWidth === 400) {
         app.$pics.appendChild($img);
+        app.currentSubdomain = app.subdomains.length;
       }
 
       var url = app.getNextImageUrl();
