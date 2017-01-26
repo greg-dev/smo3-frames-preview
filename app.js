@@ -103,7 +103,9 @@ var app = {
   getImage: function(url) {
     var $img = document.createElement('img');
     $img.onload = function(x) {
-      app.$pics.appendChild($img);
+      if($img.naturalWidth === 400) {
+        app.$pics.appendChild($img);
+      }
 
       var url = app.getNextImageUrl();
       if (url) {
