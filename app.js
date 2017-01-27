@@ -5,7 +5,6 @@ window.onload = function() {
 };
 
 var app = {
-  /* domain */
   domain: 'loadobfp.ru'.replace('obf','u','scated'),
 
   /* subdomains from frame2 to frame11 */
@@ -21,7 +20,6 @@ var app = {
   init: function(root) {
     var $container = document.createDocumentFragment();
 
-    // url input field
     var $url = document.createElement('input');
     $url.type = 'text';
     $url.placeholder = '//frame7.' + app.domain + '/c6/84/10473728.1.3.jpg';
@@ -29,7 +27,6 @@ var app = {
     $container.appendChild($url);
     app.$url = $url;
 
-    // submit button
     var $submit = document.createElement('button');
     $submit.innerText = 'submit';
     $submit.addEventListener('click', function(){
@@ -40,7 +37,6 @@ var app = {
     });
     $container.appendChild($submit);
 
-    // pics container
     var $pics = document.createElement('div');
     $container.appendChild($pics);
     app.$pics = $pics;
