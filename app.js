@@ -24,8 +24,27 @@ var app = {
     $url.type = 'text';
     $url.placeholder = '//frame7.' + app.domain + '/c6/84/10473728.1.3.jpg';
     $url.value = '//frame7.' + app.domain + '/c6/84/10473728.5.3.jpg';
+    $url.addEventListener('change', function(){
+      app.updateUrl();
+    });
     $container.appendChild($url);
     app.$url = $url;
+
+    var $start = document.createElement('input');
+    $start.type = 'text';
+    $start.value = 1;
+    $start.maxLength = 4;
+    $start.style.width = '40px';
+    $container.appendChild($start);
+    app.$start = $start;
+
+    var $end = document.createElement('input');
+    $end.type = 'text';
+    $end.value = 5;
+    $end.maxLength = 4;
+    $end.style.width = '40px';
+    $container.appendChild($end);
+    app.$end = $end;
 
     var $submit = document.createElement('button');
     $submit.innerText = 'submit';
@@ -65,6 +84,18 @@ var app = {
     }
   },
 
+  updateUrl: function() {
+    var parts = app.$url.value.split(new RegExp(app.getUrlRegex()));
+    if (9 === parts.length) {
+      app.$start.value = 1;
+      app.$end.value = parts[6];
+      return true;
+    } else {
+      app.error('Invalid url');
+      return false;
+    }
+  },
+
   getFirstImageUrl: function() {
     var parts = app.$url.value.split(new RegExp(app.getUrlRegex()));
     app.url = app.urlTemplate
@@ -72,9 +103,9 @@ var app = {
       .replace('${H}',parts[3])
       .replace('${A}',parts[4])
       .replace('${SH}',parts[5]);
-    app.currentImage = 1;
+    app.currentImage = parseInt(app.$start.value);
     app.currentSubdomain = -1;
-    app.lastImage = parseInt(parts[6]);
+    app.lastImage = parseInt(app.$end.value);
     return app.getNextImageUrl();
   },
 
