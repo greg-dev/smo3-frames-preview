@@ -51,10 +51,12 @@ var app = {
     $submit.addEventListener('click', function(){
       if (app.validateUrl()){
         app.clear();
+        app.$submit.disabled = true;
         app.getImages();
       }
     });
     $container.appendChild($submit);
+    app.$submit = $submit;
 
     var $pics = document.createElement('div');
     $container.appendChild($pics);
@@ -139,6 +141,7 @@ var app = {
       if (url) {
         app.getImage(url);
       } else {
+        app.$submit.disabled = false;
         app.info('all done');
       }
     }
