@@ -133,6 +133,7 @@ var app = {
     var $img = document.createElement('img');
     $img.onload = function(x) {
       if($img.naturalWidth === 400) {
+        $img.title = $img.src;
         app.$pics.appendChild($img);
         app.currentSubdomain = app.subdomains.length;
       }
