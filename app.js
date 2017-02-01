@@ -20,7 +20,13 @@ var app = {
   init: function(root) {
     var $container = document.createDocumentFragment();
 
+    var $label = document.createElement('label');
+    $label.for = 'url';
+    $label.innerText = 'url:';
+    $container.appendChild($label);
+
     var $url = document.createElement('input');
+    $url.id = 'url';
     $url.type = 'text';
     $url.placeholder = '//frame7.' + app.domain + '/c6/84/10473728.1.3.jpg';
     $url.value = '//frame7.' + app.domain + '/c6/84/10473728.5.3.jpg';
@@ -30,7 +36,13 @@ var app = {
     $container.appendChild($url);
     app.$url = $url;
 
+    $label = document.createElement('label');
+    $label.for = 'start';
+    $label.innerText = 'start:';
+    $container.appendChild($label);
+
     var $start = document.createElement('input');
+    $start.id = 'start';
     $start.type = 'text';
     $start.value = 1;
     $start.maxLength = 4;
@@ -38,7 +50,13 @@ var app = {
     $container.appendChild($start);
     app.$start = $start;
 
+    $label = document.createElement('label');
+    $label.for = 'end';
+    $label.innerText = 'end:';
+    $container.appendChild($label);
+
     var $end = document.createElement('input');
+    $end.id = 'end';
     $end.type = 'text';
     $end.value = 5;
     $end.maxLength = 4;
