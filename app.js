@@ -76,6 +76,11 @@ var app = {
     $container.appendChild($submit);
     app.$submit = $submit;
 
+    var $info = document.createElement('div');
+    $info.style.width = '100%';
+    $container.appendChild($info);
+    app.$info = $info;
+
     var $pics = document.createElement('div');
     $container.appendChild($pics);
     app.$pics = $pics;
@@ -126,6 +131,7 @@ var app = {
     app.currentImage = parseInt(app.$start.value);
     app.currentSubdomain = -1;
     app.lastImage = parseInt(app.$end.value);
+    app.info('getting image ' + app.currentImage + '/' + app.lastImage);
     return app.getNextImageUrl();
   },
 
@@ -138,10 +144,12 @@ var app = {
     if (app.currentSubdomain >= app.subdomains.length) {
       app.currentSubdomain = 0;
       app.currentImage++;
+      app.info('getting image ' + app.currentImage + '/' + app.lastImage);
     }
     if (app.currentImage > app.lastImage) {
       return false;
     }
+    app.info(app.$info.textContent + '.');
     return app.url
       .replace('${SUBDOMAIN}',app.subdomains[app.currentSubdomain])
       .replace('${IMAGE}',app.currentImage);
@@ -169,6 +177,7 @@ var app = {
 
   info: function(msg) {
     console.log(msg);
+    app.$info.textContent = msg;
   },
 
   error: function(msg) {
