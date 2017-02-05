@@ -68,13 +68,20 @@ var app = {
     $submit.innerText = 'submit';
     $submit.addEventListener('click', function(){
       if (app.validateUrl()){
-        app.clear();
-        app.$submit.disabled = true;
-        app.getImages();
+        app.start();
       }
     });
     $container.appendChild($submit);
     app.$submit = $submit;
+
+    var $stop = document.createElement('button');
+    $stop.innerText = 'stop';
+    $stop.disabled = true;
+    $stop.addEventListener('click', function(){
+      app.stop();
+    });
+    $container.appendChild($stop);
+    app.$stop = $stop;
 
     var $info = document.createElement('div');
     $info.style.width = '100%';
@@ -90,6 +97,19 @@ var app = {
       $root.removeChild($root.firstChild);
     }
     $root.appendChild($container);
+  },
+
+  start: function() {
+    app.$submit.disabled = true;
+    app.$stop.disabled = false;
+    app.clear();
+    app.getImages();
+  },
+
+  stop: function() {
+    app.$stop.disabled = true;
+    app.$submit.disabled = false;
+    return false;
   },
 
   clear: function() {
@@ -156,6 +176,9 @@ var app = {
   },
 
   getImage: function(url) {
+    if(app.$stop.disabled) {
+      return app.stop();
+    }
     var $img = document.createElement('img');
     $img.onload = function(x) {
       if($img.naturalWidth === 400) {
@@ -168,8 +191,8 @@ var app = {
       if (url) {
         app.getImage(url);
       } else {
-        app.$submit.disabled = false;
         app.info('all done');
+        return app.stop();
       }
     }
     $img.src = url;
