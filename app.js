@@ -10,12 +10,21 @@ var app = {
   /* subdomains from frame2 to frame11 */
   subdomains: [2,3,4,5,6,7,8,9,10,11].map(function(x) { return 'frame' + x; }),
 
-  urlTemplate: 'https://${SUBDOMAIN}.${DOMAIN}/${H}/${A}/${SH}.${IMAGE}.3.jpg',
+  urlTemplate: 'https://${SUBDOMAIN}.${DOMAIN}/${H}/${A}/${SH}.${IMAGE}.${SIZE}.jpg',
 
   getUrlRegex: function() {
     return '^.*(' + app.subdomains.join('|') + ').(' + app.domain + ')' +
       '\/([0-9a-f]{2})\/([0-9a-f]{2})\/([0-9]{7,8}).([0-9]{1,4}).([1-3]{1}.jpg)$';
   },
+
+  sizes: [
+    {values: '3|400', label: 'big'},
+    //{values: '2|100', label: 'medium'},
+    {values: '1|80', label: 'small'}
+  ],
+
+  imgSize: 3,
+  imgWidth: 400,
 
   init: function(root) {
     var $container = document.createDocumentFragment();
@@ -63,6 +72,21 @@ var app = {
     $end.style.width = '40px';
     $container.appendChild($end);
     app.$end = $end;
+
+    for(var i=0; i < app.sizes.length; i++) {
+      var $size = document.createElement('input');
+      $size.name = 'size';
+      $size.type = 'radio';
+      $size.checked = !i;
+      $size.value = app.sizes[i].values;
+      $container.appendChild($size);
+      $size.insertAdjacentText('afterend', app.sizes[i].label);
+      $size.addEventListener('change', function(el){
+        var values = el.target.value.split('|');
+        app.imgSize = values[0];
+        app.imgWidth = parseInt(values[1]);
+      });
+    }
 
     var $submit = document.createElement('button');
     $submit.innerText = 'submit';
@@ -147,7 +171,8 @@ var app = {
       .replace('${DOMAIN}',parts[2])
       .replace('${H}',parts[3])
       .replace('${A}',parts[4])
-      .replace('${SH}',parts[5]);
+      .replace('${SH}',parts[5])
+      .replace('${SIZE}',app.imgSize);
     app.currentImage = parseInt(app.$start.value);
     app.currentSubdomain = -1;
     app.lastImage = parseInt(app.$end.value);
@@ -181,7 +206,7 @@ var app = {
     }
     var $img = document.createElement('img');
     $img.onload = function(x) {
-      if($img.naturalWidth === 400) {
+      if($img.naturalWidth === app.imgWidth) {
         $img.title = $img.src;
         app.$pics.appendChild($img);
         app.currentSubdomain = app.subdomains.length;
