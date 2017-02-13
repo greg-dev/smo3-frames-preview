@@ -9,3 +9,6 @@ This simple script will let you find such preview pictures and view them as a ga
 2. Paste the image url into the `url` field.
 3. Adjust `start` and `end` values to limit the number of requests (currently up to 10 requests needed to find one preview frame).
 4. Click the `submit` button and watch broadcast frames appearing one by one.
+
+## Live demo:
+https://greg-dev.github.io/smo3-frames-preview/
