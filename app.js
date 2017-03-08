@@ -113,8 +113,23 @@ var app = {
     app.$info = $info;
 
     var $pics = document.createElement('div');
+    $pics.addEventListener('click', function(){
+      app.$zoom.style.display = 'none';
+    });
     $container.appendChild($pics);
     app.$pics = $pics;
+
+    var $zoom = document.createElement('img');
+    $zoom.id = 'zoom';
+    $zoom.style.position = 'absolute';
+    $zoom.style.width = 400;
+    $zoom.style.height = 300;
+    $zoom.style.display = 'none';
+    $zoom.addEventListener('click', function(){
+      app.$zoom.style.display = 'none';
+    });
+    $container.appendChild($zoom);
+    app.$zoom = $zoom;
 
     var $root = document.querySelector(root);
     while ($root.firstChild) {
@@ -208,6 +223,11 @@ var app = {
     $img.onload = function(x) {
       if($img.naturalWidth === app.imgWidth) {
         $img.title = $img.src;
+        if(app.imgSize < 3) {
+          $img.addEventListener('mouseover', function(ev){
+            app.zoom(ev);
+          });
+        }
         app.$pics.appendChild($img);
         app.currentSubdomain = app.subdomains.length;
       }
@@ -221,6 +241,13 @@ var app = {
       }
     }
     $img.src = url;
+  },
+
+  zoom: function(ev) {
+    app.$zoom.style.display = 'block';
+    app.$zoom.style.left = ev.clientX + 'px';
+    app.$zoom.style.top = ev.clientY + 'px';
+    app.$zoom.src = ev.target.src.replace(app.imgSize + '.jpg', '3.jpg');
   },
 
   info: function(msg) {
