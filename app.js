@@ -30,7 +30,7 @@ var app = {
     var $container = document.createDocumentFragment();
 
     var $label = document.createElement('label');
-    $label.for = 'url';
+    $label.htmlFor = 'url';
     $label.innerText = 'url:';
     $container.appendChild($label);
 
@@ -46,7 +46,7 @@ var app = {
     app.$url = $url;
 
     $label = document.createElement('label');
-    $label.for = 'start';
+    $label.htmlFor = 'start';
     $label.innerText = 'start:';
     $container.appendChild($label);
 
@@ -60,7 +60,7 @@ var app = {
     app.$start = $start;
 
     $label = document.createElement('label');
-    $label.for = 'end';
+    $label.htmlFor = 'end';
     $label.innerText = 'end:';
     $container.appendChild($label);
 
