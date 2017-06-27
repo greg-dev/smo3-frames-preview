@@ -75,17 +75,22 @@ var app = {
 
     for (var i = 0; i < app.sizes.length; i++) {
       var $size = document.createElement('input');
+      $size.id = app.sizes[i].label;
       $size.name = 'size';
       $size.type = 'radio';
       $size.checked = !i;
       $size.value = app.sizes[i].values;
       $container.appendChild($size);
-      $size.insertAdjacentText('afterend', app.sizes[i].label);
       $size.addEventListener('change', function (el) {
         var values = el.target.value.split('|');
         app.imgSize = values[0];
         app.imgWidth = parseInt(values[1]);
       });
+
+      $label = document.createElement('label');
+      $label.htmlFor = app.sizes[i].label;
+      $label.innerText = app.sizes[i].label;
+      $container.appendChild($label);
     }
 
     var $submit = document.createElement('button');
